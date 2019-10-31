@@ -143,6 +143,7 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-randombytes')
     compile project(':@react-native-community_async-storage')
     compile project(':react-native-get-random-values')
     implementation fileTree(dir: "libs", include: ["*.jar"])

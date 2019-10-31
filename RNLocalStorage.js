@@ -1,4 +1,4 @@
-import { CruxPay } from "@cruxpay/rn-sdk/dist/cruxpay-sdk-rn";
+import { CruxPay } from "@cruxpay/rn-sdk";
 import * as AsyncStorage from "react-native/Libraries/Storage/AsyncStorage";
 
 class RNLocalStorage extends CruxPay.storage.StorageService {

@@ -5,10 +5,11 @@
  * @format
  * @flow
  */
-import 'react-native-get-random-values';
+// import 'react-native-get-random-values';
+import './globals';
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
-import {CruxPay} from "@cruxpay/rn-sdk/dist/cruxpay-sdk-rn";
+import {CruxPay} from "@cruxpay/rn-sdk";
 import {RNLocalStorage} from "./RNLocalStorage";
 
 const {CruxClient} = CruxPay;

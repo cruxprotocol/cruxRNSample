@@ -3,6 +3,7 @@ package com.cruxrnsample;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.bitgo.randombytes.RandomBytesPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import org.linusu.RNGetRandomValuesPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RandomBytesPackage(),
             new AsyncStoragePackage(),
             new RNGetRandomValuesPackage()
       );
