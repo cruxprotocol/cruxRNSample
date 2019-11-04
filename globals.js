@@ -1,15 +1,15 @@
-// Inject node globals into React Native global scope.
-global.Buffer = require('buffer').Buffer;
-global.process = require('process');
-global.process.env.NODE_ENV = __DEV__ ? 'development' : 'production';
-
-// Needed so that 'stream-http' chooses the right default protocol.
-global.location = {
-    protocol: 'file:'
+import 'node-libs-react-native/globals';
+if (typeof btoa === 'undefined') {
+    global.btoa = str => new Buffer(str, 'binary').toString('base64'); // eslint-disable-line no-buffer-constructor
+}
+if (typeof atob === 'undefined') {
+    global.atob = b64Encoded => new Buffer(b64Encoded, 'base64').toString('binary'); // eslint-disable-line no-buffer-constructor
+}
+if (!Error.captureStackTrace) { // captureStackTrace is only available when debugging
+    Error.captureStackTrace = () => {};
 }
 
-
-global.__filename = "lol/test.js"
+global.__filename = "cruxpay/logger.js"
 
 if (require('./package.json').dependencies['react-native-randombytes']) {
     // important that this comes before require('crypto')
@@ -28,15 +28,12 @@ if (require('./package.json').dependencies['react-native-randombytes']) {
 
     let randomBytes
 
-
-    function getRandomValues (arr) {
-        if (!randomBytes) randomBytes = require('react-native-randombytes').randomBytes
-
-
-        const bytes = randomBytes(arr.length)
-        for (var i = 0; i < bytes.length; i++) {
-            arr[i] = bytes[i]
+    function getRandomValues(array) {
+        if (!randomBytes) randomBytes = require('react-native-randombytes').randomBytes;
+        const bytes = randomBytes(array.length);
+        for (let i = 0; i < bytes.length; i++) {
+            array[i] = bytes[i];
         }
+        return array;
     }
-    console.log("getRandomValues changed")
 }
