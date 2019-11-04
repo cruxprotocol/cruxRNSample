@@ -6,13 +6,13 @@
  * @flow
  */
 import 'react-native-get-random-values';
-import React, {Component} from 'react';
-import { AppRegistry, View, TextInput, Text, Button, Picker, CheckBox, Alert, StyleSheet } from 'react-native'
+import React, { Component } from 'react';
+import { StatusBar, ScrollView, SafeAreaView, View, TextInput, Text, Button, Picker, CheckBox, Alert, StyleSheet } from 'react-native'
 import AsyncStorage from "@react-native-community/async-storage";
-import {CruxPay} from "@cruxpay/rn-sdk/dist/cruxpay-sdk-rn";
-import {RNLocalStorage} from "./RNLocalStorage";
+import { CruxPay } from "@cruxpay/rn-sdk/dist/cruxpay-sdk-rn";
+import { RNLocalStorage } from "./RNLocalStorage";
 
-const {CruxClient, errors} = CruxPay;
+const { CruxClient, errors } = CruxPay;
 let walletClientName = "cruxdev"
 let encryptionKey = "fookey"
 
@@ -39,8 +39,7 @@ const sampleAddressMap = {
 };
 
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   cruxClient;
 
   constructor(props) {
@@ -88,15 +87,15 @@ export default class App extends Component<Props> {
     }
 
     // initialising the cruxClient
-    this.cruxClient = new CruxPay.CruxClient(cruxClientOptions)
+    this.cruxClient = new CruxClient(cruxClientOptions)
     this.cruxClient.init()
-        .then(async () => {
-          await this.getCruxIDState()
-        })
-        .catch((error) => {
-          Alert.alert("ERROR during initialisation", JSON.stringify(error))
-          console.log(error);
-        })
+      .then(async () => {
+        await this.getCruxIDState()
+      })
+      .catch((error) => {
+        Alert.alert("ERROR during initialisation", JSON.stringify(error))
+        console.log(error);
+      })
   }
 
   isCruxIDAvailable = async () => {
@@ -261,106 +260,118 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-        <>
-          <View>
-            <Text>Demo Wallet</Text>
-            <View>
-              <Text>wallet client: {this.state.walletClientName}</Text>
-              <Text>wallet encryption key: {this.state.encryptionKey}</Text>
-              {/* <Text>wallet addresses: {this.state.userAddresses} </Text> */}
+      <>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <View style={styles.body}>
             </View>
-          </View>
-
-          <Text style={styles.container}></Text>
-
-          <View>
-            <Text>CruxPay Interface</Text>
-
             <View>
-              <Text>cruxID status:</Text>
-              <Text>{this.state.cruxIDStatus}</Text>
+              <Text>Demo Wallet</Text>
+              <View>
+                <Text>wallet client: {this.state.walletClientName}</Text>
+                <Text>wallet encryption key: {this.state.encryptionKey}</Text>
+                {/* <Text>wallet addresses: {this.state.userAddresses} </Text> */}
+              </View>
             </View>
 
-            <View>
-              <Text>cruxID availability:</Text>
-              <TextInput placeholder="ankit" onChangeText={(registrationId) => this.setState({ registrationId })}></TextInput>
-              <Button title="Check" onPress={() => this.isCruxIDAvailable()}></Button>
-              <Text>{this.state.availability}</Text>
-            </View>
+            <Text style={styles.container}></Text>
 
             <View>
-              <Text>cruxID registration:</Text>
-              <TextInput placeholder="ankit" onChangeText={(newSubdomain) => this.setState({ newSubdomain })}></TextInput>
-              <Text>@{this.state.walletClientName}.crux</Text>
-              <Button title="Register" onPress={() => this.registerCruxID()}></Button>
-              <Text>{this.state.registrationAcknowledgement}</Text>
-            </View>
+              <Text>CruxPay Interface</Text>
 
-            <View>
-              <Text>resolving public addresses:</Text>
-              <TextInput placeholder="ankit@scatter_dev.crux" onChangeText={(receiverVirtualAddress) => this.setState({ receiverVirtualAddress })}></TextInput>
-              <Picker
+              <View>
+                <Text>cruxID status:</Text>
+                <Text>{this.state.cruxIDStatus}</Text>
+              </View>
+
+              <View>
+                <Text>cruxID availability:</Text>
+                <TextInput placeholder="ankit" onChangeText={(registrationId) => this.setState({ registrationId })}></TextInput>
+                <Button title="Check" onPress={() => this.isCruxIDAvailable()}></Button>
+                <Text>{this.state.availability}</Text>
+              </View>
+
+              <View>
+                <Text>cruxID registration:</Text>
+                <TextInput placeholder="ankit" onChangeText={(newSubdomain) => this.setState({ newSubdomain })}></TextInput>
+                <Text>@{this.state.walletClientName}.crux</Text>
+                <Button title="Register" onPress={() => this.registerCruxID()}></Button>
+                <Text>{this.state.registrationAcknowledgement}</Text>
+              </View>
+
+              <View>
+                <Text>resolving public addresses:</Text>
+                <TextInput placeholder="ankit@scatter_dev.crux" onChangeText={(receiverVirtualAddress) => this.setState({ receiverVirtualAddress })}></TextInput>
+                <Picker
                   selectedValue={this.state.currency}
                   style={{ height: 50, width: 100 }}
                   onValueChange={(itemValue) =>
-                      this.setState({ currency: itemValue })
+                    this.setState({ currency: itemValue })
                   }>
-                {Object.keys(this.state.userAddresses).map((currency) => { return <Picker.Item label={currency} value={currency} /> })}
-              </Picker>
-              <Button title="Resolve address" onPress={() => this.resolveCurrencyAddressForCruxID()}></Button>
-              <Text>{this.state.addresses}</Text>
-            </View>
+                  {Object.keys(this.state.userAddresses).map((currency) => { return <Picker.Item label={currency} value={currency} /> })}
+                </Picker>
+                <Button title="Resolve address" onPress={() => this.resolveCurrencyAddressForCruxID()}></Button>
+                <Text>{this.state.addresses}</Text>
+              </View>
 
-            <View>
-              <Text>fetch wallet asset map:</Text>
-              <Button title="Get supported assets" onPress={() => this.getAssetMap()}></Button>
-              <Text>{this.state.assetMap}</Text>
-            </View>
+              <View>
+                <Text>fetch wallet asset map:</Text>
+                <Button title="Get supported assets" onPress={() => this.getAssetMap()}></Button>
+                <Text>{this.state.assetMap}</Text>
+              </View>
 
-            <View>
-              <Text>fetch public address map:</Text>
-              <Button title="Get Public Addresses" onPress={() => this.getAddressMap()}></Button>
-              <Text>{this.state.addressMap}</Text>
-            </View>
+              <View>
+                <Text>fetch public address map:</Text>
+                <Button title="Get Public Addresses" onPress={() => this.getAddressMap()}></Button>
+                <Text>{this.state.addressMap}</Text>
+              </View>
 
-            <View>
-              <Text>publish address map:</Text>
-              {
-                Object.keys(this.state.userAddresses).map((currency, index) => {
-                  return <View key={index}>
-                    <CheckBox
+              <View>
+                <Text>publish address map:</Text>
+                {
+                  Object.keys(this.state.userAddresses).map((currency, index) => {
+                    return <View key={index}>
+                      <CheckBox
                         key={index}
                         value={this.state.publishAddressOptions[currency]}
                         onValueChange={(value) => {
                           let options = this.state.publishAddressOptions
                           options[currency] = value;
-                          this.setState({publishAddressOptions: options })
+                          this.setState({ publishAddressOptions: options })
                         }}
-                    />
-                    <Text>{currency}</Text>
-                  </View>
-                })
-              }
-              <Button title="Publish Addresses" onPress={() => this.putAddressMap()}></Button>
-              <Text>{this.state.putAddressMapAcknowledgement}</Text>
+                      />
+                      <Text>{currency}</Text>
+                    </View>
+                  })
+                }
+                <Button title="Publish Addresses" onPress={() => this.putAddressMap()}></Button>
+                <Text>{this.state.putAddressMapAcknowledgement}</Text>
+              </View>
+
+              <View>
+                <Text>change password (effectively encryptionKey):</Text>
+                <TextInput placeholder="old encryption key" onChangeText={(oldEncryptionKey) => this.setState({ oldEncryptionKey })}></TextInput>
+                <TextInput placeholder="new encryption key" onChangeText={(newEncryptionKey) => this.setState({ newEncryptionKey })}></TextInput>
+                <Button title="Change Password" onPress={() => this.updatePassword()}></Button>
+                <Text>{this.state.passwordUpdateAcknowledgement}</Text>
+              </View>
+
+
             </View>
-
-            <View>
-              <Text>change password (effectively encryptionKey):</Text>
-              <TextInput placeholder="old encryption key" onChangeText={(oldEncryptionKey) => this.setState({ oldEncryptionKey })}></TextInput>
-              <TextInput placeholder="new encryption key" onChangeText={(newEncryptionKey) => this.setState({ newEncryptionKey })}></TextInput>
-              <Button title="Change Password" onPress={() => this.updatePassword()}></Button>
-              <Text>{this.state.passwordUpdateAcknowledgement}</Text>
-            </View>
-
-
-          </View>
-        </>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    // backgroundColor: Colors.lighter,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
