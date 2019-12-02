@@ -28,7 +28,7 @@ Testing needs to happen to for both bundled and unbundled branch
 
 #### 2. Sample app from [bundled version](https://github.com/cruxprotocol/cruxRNSample/tree/bundled) branch
 
-The steps 1-6 are same for bundled version too. After doing those follow these.
+The steps 1-6 are same for bundled version too. After doing those follow these (which essentially are building the bundled form of the sdk).
 1. `cd node_modules/@cruxpay/rn-sdk`
 2. `npm install`
 3. `NODE_ENV=prod npm run build`
