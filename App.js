@@ -10,7 +10,7 @@ import './globals';
 import React, { Component } from 'react';
 import { StatusBar, ScrollView, SafeAreaView, View, TextInput, Text, Button, Picker, CheckBox, Alert, StyleSheet } from 'react-native'
 import AsyncStorage from "@react-native-community/async-storage";
-import { CruxPay } from "@cruxpay/rn-sdk/dist/cruxpay-sdk-rn";
+import { CruxPay } from "@cruxpay/rn-sdk";
 import { RNLocalStorage } from "./RNLocalStorage";
 
 const { CruxClient, errors } = CruxPay;
