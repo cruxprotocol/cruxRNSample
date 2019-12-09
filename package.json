@@ -11,7 +11,7 @@
     "react-native": "0.57.4",
     "@react-native-community/async-storage": "^1.6.2",
     "react-native-get-random-values": "^1.1.0",
-    "@cruxpay/rn-sdk": "0.0.2"
+    "@cruxpay/rn-sdk": "0.0.3"
   },
   "devDependencies": {
     "jsc-android": "241213.1.0",
