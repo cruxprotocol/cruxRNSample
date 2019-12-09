@@ -12,7 +12,7 @@
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "@react-native-community/async-storage": "^1.6.2",
-    "@cruxpay/rn-sdk": "0.0.2",
+    "@cruxpay/rn-sdk": "0.0.3",
     "react-native-randombytes": "^3.5.3",
     "vm-browserify": "^1.1.0"
   },
